@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
 import cors from 'cors';
+import router from './router';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -21,3 +22,4 @@ server.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
 
+app.use('/', router());
