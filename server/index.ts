@@ -16,7 +16,6 @@ app.use(compression()); //reduces the size of responses and improves the speed o
 app.use(cookieParser()); //parses cookies from incoming requests
 app.use(bodyParser.json()); //used to parse incoming JSON payloads of HTTP POST requests. It extracts the JSON data from the request body and makes it accessible via req.body in your route handlers
 
-
 const server = http.createServer(app);
 server.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);

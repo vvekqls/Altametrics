@@ -1,32 +1,29 @@
-import express from 'express';
-// import { createUser, getUserByEmail } from '../db/users';
-import { random, authentication } from '../helpers';
+import { Request, Response } from 'express'
+import bcrypt from 'bcrypt';
+import prisma from '../libs/prismadb'
 
-const getUserByEmail = (email: any) => (email)
-
-export const login = async (req: express.Request, res: express.Response) => {
+export const login = async (req: Request, res: any) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
       return res.sendStatus(400);
     }
 
-    const user = await getUserByEmail(email).select('+authentication.salt +authentication.password');
-    if (!user) {
-      return res.sendStatus(400);
+    const existingUser = await prisma.user.findUnique({ where: { email } });
+
+    if (!existingUser) {
+      return res.status(401).json({ message: 'Invalid Email' });
     }
 
-    const expectedHash = authentication(user.authentication.salt, password);
-    if (user.authentication.password != expectedHash) {
-      return res.sendStatus(403);
+    const isPasswordValid = await bcrypt.compare(password, existingUser.password);
+
+    if (!isPasswordValid) {
+      return res.status(403).json({ message: 'Invalid login' });
     }
-    const salt = random();
-    user.authentication.sessionToken = authentication(salt, user._id.toString());
-    await user.save()
-    //set the cookie
-    res.cookie('RAM-AUTH', user.authentication.sessionToken, { domain: 'localhost', path: '/' });
-    return res.status(200).json(user).end();
+
+    return res.status(200).json({ message: 'login suceess!' })
   } catch (error) {
+
     console.log(error);
     return res.sendStatus(400);
   }
