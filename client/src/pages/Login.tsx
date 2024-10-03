@@ -40,7 +40,7 @@ const Login: React.FC = () => {
 
   const mutation = useMutation({
     mutationFn: async (values: LoginFormValues) => {
-      const response = await axios.post("/api/auth/login", { ...values });
+      const response = await axios.post(`${import.meta.env.PROXY_API}/auth/login`, { ...values });
       return response.data;
     },
     onSuccess: (data) => {

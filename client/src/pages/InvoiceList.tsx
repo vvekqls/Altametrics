@@ -56,10 +56,14 @@ const InvoiceList: React.FC = () => {
       invoices: Invoice[];
       meta: { totalPages: number; total: number; limit: number };
     }> => {
-      const response = await axios.get(`/api/invoices?page=${page}`);
+      const response = await axios.get(
+        `${import.meta.env.VITE_PROXY_API}/invoices?page=${page}`
+      );
       return response.data;
     },
   });
+
+  console.log("--data--", data);
 
   const todayDate = new Date();
   const date = formattedDate(todayDate);
