@@ -19,6 +19,8 @@
     docker-compose exec -it server npx prisma migrate dev --name init
     docker-compose exec -it server npm run seed
     ```
+### Client Login
+- Username: Demo@exmple.com  password: password123
 
 ### Starting Server
 
