@@ -16,8 +16,8 @@
 - this will run client & server
   - ```sh
     docker compose up --build
-    docker-compose exec server npx prisma migrate dev --name init
-    docker-compose exec server npm run seed
+    docker-compose exec -it server npx prisma migrate dev --name init
+    docker-compose exec -it server npm run seed
     ```
 
 ### Starting Server
