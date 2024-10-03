@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+  client:
+    container_name: client
+    image: client
+    build:
+      context: ./client
+      dockerfile: client.dockerfile
+    ports:
+      - 5173:5173
+    restart: always
+    depends_on:
+      - server
+    environment:
+      - VITE_PROXY_API=http://localhost:3000
+  server:
+    container_name: server
+    image: server
+    build:
+      context: ./server
+      dockerfile: server.dockerfile
+    ports:
+      - 3000:3000
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres?schema=public
+  db:
+    container_name: db
+    image: postgres:12
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata: {}

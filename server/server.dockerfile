@@ -2,7 +2,7 @@
 FROM node:19-alpine
 
 # Set the working directory inside the container
-WORKDIR /usr/src/altametrics
+WORKDIR /app
 
 # Copy the rest of the application code
 COPY . .
@@ -10,10 +10,12 @@ COPY . .
 COPY package*.json ./
 
 # Install dependencies
-RUN ["npm", "ci"]
+RUN npm install
+
+RUN npx prisma generate
 
 # Expose the port the app runs on
 EXPOSE 3000
-
+# Command to run the seed Data
 # Command to run the application
-CMD ["npm", "run", "start"]
+CMD npm run start
