@@ -62,7 +62,6 @@ const InvoiceList: React.FC = () => {
   });
 
   const todayDate = new Date();
-
   const date = formattedDate(todayDate);
 
   useEffect(() => {}, [selectedInvoice]);
