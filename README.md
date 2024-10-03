@@ -20,7 +20,8 @@
     docker-compose exec -it server npm run seed
     ```
 ### Client Login
-- Username: Demo@exmple.com  password: password123
+- Username: demo@exmple.com  
+- password: password123
 
 ### Starting Server
 
