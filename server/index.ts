@@ -1,5 +1,6 @@
 import express from 'express';
 import http from 'http';
+import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
@@ -7,7 +8,10 @@ import cors from 'cors';
 import router from './router';
 
 const app = express();
+dotenv.config({ path: '.env' })
+
 const port = process.env.PORT || 3000;
+
 
 app.use(cors({
   credentials: true, //indicates that the server can include credentials (e.g., cookies, HTTP authentication) in CORS requests.

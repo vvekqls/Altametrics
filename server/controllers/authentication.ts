@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken'
 import prisma from '../libs/prismadb'
 
 export const login = async (req: Request, res: any) => {
@@ -21,7 +22,11 @@ export const login = async (req: Request, res: any) => {
       return res.status(403).json({ message: 'Invalid login' });
     }
 
-    return res.status(200).json({ message: 'login suceess!' })
+    const token = jwt.sign({
+      userid: existingUser.id
+    }, process.env.JWT_SECRET!)
+
+    return res.json({ existingUser, token })
   } catch (error) {
 
     console.log(error);
