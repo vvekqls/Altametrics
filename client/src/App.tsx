@@ -1,14 +1,14 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-// import Login from "./components/Login";
+import Login from "./pages/Login";
 // import MainPage from "./components/MainPage";
 import InvoiceList from "./pages/InvoiceList";
-// import PrivateRoute from "./components/PrivateRoute";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
     <Router>
       <Routes>
-        {/* <Route path="/login" element={<Login />} /> */}
+        <Route path="/login" element={<Login />} />
         {/* <Route
           path="/"
           element={
@@ -20,9 +20,9 @@ function App() {
         <Route
           path="/invoices"
           element={
-            // <PrivateRoute>
+            <PrivateRoute>
               <InvoiceList />
-            // </PrivateRoute>
+            </PrivateRoute>
           }
         />
       </Routes>
@@ -30,4 +30,4 @@ function App() {
   );
 }
 
-export default App
+export default App;

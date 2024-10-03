@@ -5,6 +5,5 @@ const formatter = new Intl.DateTimeFormat("en-US", {
 });
 
 export const formattedDate = (date: Date) => {
-  console.log("--date--", date);
   return formatter.format(date);
 };
