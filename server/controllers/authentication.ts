@@ -26,7 +26,7 @@ export const login = async (req: Request, res: any) => {
       userid: existingUser.id
     }, process.env.JWT_SECRET!)
 
-    return res.json({ existingUser, token })
+    return res.json({ token })
   } catch (error) {
 
     console.log(error);
