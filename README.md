@@ -11,13 +11,17 @@
 - Copy and paste .env.example variables into a .env file or create your own variables.
 
 ### Run Docker
-- Setup the database - make sure Docker is running first
+- Setup the database - make sure Docker is running first & run docker on root folder
 - Run database migrations and seed data:
+- this will run client & server
   - ```sh
     docker compose up --build
-    docker-compose exec server npx prisma migrate dev --name init
-    docker-compose exec server npm run seed
+    docker-compose exec -it server npx prisma migrate dev --name init
+    docker-compose exec -it server npm run seed
     ```
+### Client Login
+- Username: demo@exmple.com  
+- password: password123
 
 ### Starting Server
 
