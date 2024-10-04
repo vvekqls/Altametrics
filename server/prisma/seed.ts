@@ -2,7 +2,8 @@ import prisma from '../libs/prismadb'
 import bcrypt from 'bcrypt';
 
 async function main() {
-  const hashedPassword = await bcrypt.hash('password123', 10);
+  const salt = await bcrypt.genSalt(10)
+  const hashedPassword = await bcrypt.hash('password123', salt);
 
   const user = await prisma.user.create({
     data: {
