@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+// import { useQuery } from "@tanstack/react-query";
+import { useGetInvoicesQuery } from "@/store/invoicesApiSlice";
 import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 
@@ -50,20 +51,7 @@ const InvoiceList: React.FC = () => {
 
   const page = +(searchParams.get("page") ?? DEFAULT_PAGE);
 
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["invoices", page],
-    queryFn: async (): Promise<{
-      invoices: Invoice[];
-      meta: { totalPages: number; total: number; limit: number };
-    }> => {
-      const response = await axios.get(
-        `${import.meta.env.VITE_PROXY_API}/invoices?page=${page}`
-      );
-      return response.data;
-    },
-  });
-
-  console.log("--data--", data);
+  const { data, isLoading, isError, error } = useGetInvoicesQuery({page})
 
   const todayDate = new Date();
   const date = formattedDate(todayDate);
@@ -75,7 +63,7 @@ const InvoiceList: React.FC = () => {
   };
 
   if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>An error occurred: {(error as Error).message}</div>;
+  if (isError) return <div>An error occurred: {(error as Error).message}</div>;
 
   return (
     <div className="flex h-screen bg-gray-100">
