@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
-// import { useQuery } from "@tanstack/react-query";
+import React from "react";
 import { useGetInvoicesQuery } from "@/store/invoicesApiSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { setInvoice } from "../store/invoiceSlice";
+import { RootState } from "../store";
 import { useSearchParams } from "react-router-dom";
-import axios from "axios";
 
 import {
   Dialog,
@@ -46,20 +47,19 @@ interface Invoice {
 const DEFAULT_PAGE = 1;
 
 const InvoiceList: React.FC = () => {
-  const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null);
+  const selectedInvoice = useSelector(
+    (state: RootState) => state.invoice.invoice
+  );
   const [searchParams] = useSearchParams();
-
   const page = +(searchParams.get("page") ?? DEFAULT_PAGE);
-
-  const { data, isLoading, isError, error } = useGetInvoicesQuery({page})
+  const { data, isLoading, isError, error } = useGetInvoicesQuery({ page });
+  const dispatch = useDispatch();
 
   const todayDate = new Date();
   const date = formattedDate(todayDate);
 
-  useEffect(() => {}, [selectedInvoice]);
-
   const handleSelectInvoice = (invoice: Invoice) => {
-    setSelectedInvoice(invoice);
+    dispatch(setInvoice(invoice));
   };
 
   if (isLoading) return <div>Loading...</div>;

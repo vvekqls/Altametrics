@@ -20,13 +20,12 @@ export const invoicesApiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:3000",
   }),
-  
   endpoints: (builder) => {
     return {
       getInvoices: builder.query<{ invoices: Invoice[], meta: Meta }, { page: number }>({
         query: ({ page }) =>
           `/invoices?page=${page}`
-      })
+      }),
     }
   }
 })
